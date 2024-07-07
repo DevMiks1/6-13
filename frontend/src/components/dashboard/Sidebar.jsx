@@ -46,10 +46,10 @@ export const SideBar = ({ setTab, tab }) => {
       return (
         <React.Fragment key={user._id}>
           {[
-            { tabName: "prelist", label: "Pre List", icon: FaUser },
+            { tabName: "prelist", label: "Accounts", icon: FaUser },
             { tabName: "studlistid", label: "ID List", icon: FaList },
             { tabName: "graphsandanalytics", label: "Graphs & Analytics", icon: FaChartBar },
-            { tabName: "reports", label: "Reports", icon: FaFileAlt },
+            { tabName: "reports", label: "ID Lost Record", icon: FaFileAlt },
             { tabName: "settings", label: "Settings", icon: FaCog },
           ].map((item) => (
             <Link
@@ -64,10 +64,10 @@ export const SideBar = ({ setTab, tab }) => {
                 px={2}
                 py={2}
                 mb={2}
-                _hover={{ bg: "#FFD700", borderRadius: 5 }}
+                _hover={{ bg: "#FFD700", borderRadius: 5, color:"blue.700" }}
               >
-                <Icon as={item.icon} color={tab === item.tabName ? "blue.700" : "white"} />
-                <Text as="p" color={tab === item.tabName ? "blue.700" : "white"}>{item.label}</Text>
+                <Icon as={item.icon} color={tab === item.tabName ? "blue.700" : ""} />
+                <Text as="p" color={tab === item.tabName ? "blue.700" : ""}>{item.label}</Text>
               </Flex>
             </Link>
           ))}

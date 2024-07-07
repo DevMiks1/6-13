@@ -48,6 +48,7 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
       picture: "",
       semestertype: "",
       schoolyear: "",
+      course:"",
       role,
       contactnumber: "",
       birthdate: "",

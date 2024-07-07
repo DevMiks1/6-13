@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -45,17 +47,19 @@ const StudentListTable = ({
 
   const handleDeleteAccounts = (id) => {
     handleDeleteAccount(id);
-    console.log(id)
+    console.log(id);
     if (
       currentPage >= Math.ceil((filteredStudents.length - 1) / studentsPerPage)
     ) {
       setCurrentPage(Math.max(0, currentPage - 1));
     }
   };
-  
+  const filteredStudents = data.filter((account) => account.role === "student");
+  const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
 
-  const displayStudents = data
-    .filter((account) => account.role === "student")
+
+  const displayStudents = filteredStudents
+    .reverse()
     .slice(currentPage * studentsPerPage, (currentPage + 1) * studentsPerPage)
     .map((account) => (
       <Tr key={account._id}>
@@ -67,33 +71,41 @@ const StudentListTable = ({
           <Button
             size="sm"
             leftIcon={<ViewIcon />}
+            bg="blue.200"
+            color="blue.900"
             mr={2}
             onClick={() => {
               handleViewAccounts(account._id);
             }}
+            _hover={{ bg: "blue.300" }}
           >
             View
           </Button>
           <Button
             size="sm"
             leftIcon={<EditIcon />}
+            bg="green.200"
+            color="green.900"
+            _hover={{ bg: "green.300" }}
             mr={2}
             onClick={() => {
               handleEditAccounts(account._id);
             }}
+            
           >
             Edit
           </Button>
           <Button
             size="sm"
-            bg="red.500"
-            color="white"
+            bg="red.200"
+            color="red.900"
+            _hover={{ bg: "red.300" }}
             leftIcon={<DeleteIcon />}
             mr={2}
             onClick={() => {
               handleDeleteAccounts(account._id);
             }}
-            _hover={{ bg: "red.600" }}
+            
           >
             Delete
           </Button>
@@ -113,8 +125,6 @@ const StudentListTable = ({
       </Tr>
     ));
 
-  const filteredStudents = data.filter((account) => account.role === "student");
-  const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
 
   return (
     <>
@@ -124,7 +134,7 @@ const StudentListTable = ({
         </Flex>
       ) : (
         <Box as="section">
-          <Box h="60vh"  overflow="auto">
+          <Box h="60vh" overflow="auto">
             <Table variant="simple" w="100%">
               <Thead>
                 <Tr>

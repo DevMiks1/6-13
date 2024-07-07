@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Box,
   Input,
@@ -14,6 +14,8 @@ import {
   TabPanel,
   List,
   ListItem,
+  Button,
+  Text,
 } from "@chakra-ui/react";
 import IdModal from "./prelist/student/idmodal/IdModal";
 import { useData } from "../../context/FetchAccountContext";
@@ -25,10 +27,12 @@ export default function StudIDList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCriteria, setFilterCriteria] = useState("issued"); // Default filter criteria set to 'issued'
-  const { data } = useData();
+  const { data, setData } = useData();
+  const [showDepartment, setShowDepartment] = useState(false);
+  const [hoveredDepartment, setHoveredDepartment] = useState("");
+  const [selectedProgram, setSelectedProgram] = useState("");
 
   const handleViewClick = (student) => {
     setSelectedStudent(student);
@@ -43,6 +47,23 @@ export default function StudIDList() {
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
+
+  const handleOpenDepartment = useCallback(() => {
+    setShowDepartment((prev) => !prev);
+  }, []);
+
+  const handleHoverDepartment = useCallback((department) => {
+    setHoveredDepartment(department);
+  }, []);
+
+  const handleLeaveDepartment = useCallback(() => {
+    setHoveredDepartment("");
+    setShowDepartment((prev) => !prev);
+  }, []);
+
+  const handleSelectProgram = useCallback((program) => {
+    setSelectedProgram(program);
+  }, []);
 
   return (
     <>
@@ -64,11 +85,155 @@ export default function StudIDList() {
               <option value="non-issued">Non-Issued</option>
             </Select>
           </Box>
+          <Box pos="relative">
+            <Button onClick={handleOpenDepartment}>Filter</Button>
+            {showDepartment && (
+              <Flex
+                flexDir="column"
+                pos="absolute"
+                bg="gray.700"
+                color="white"
+                justify="center"
+                textAlign="center"
+                mt={2}
+                boxShadow="md"
+                zIndex={10}
+              >
+                <Box pos="relative" w="100%">
+                  <Box borderBottom="1px solid">
+                    <Text
+                      onMouseEnter={() => handleHoverDepartment("INET")}
+                      cursor="pointer"
+                      _hover={{ bg: "gray.700" }}
+                      px="2.1rem"
+                      py={2}
+                    >
+                      INET
+                    </Text>
+                    {hoveredDepartment === "INET" && (
+                      <Flex
+                        onMouseLeave={handleLeaveDepartment}
+                        flexDir="column"
+                        justify="center"
+                        textAlign="center"
+                        pos="absolute"
+                        bg="gray.600"
+                        left="100%"
+                        top="0"
+                        mr="2rem"
+                        w="100%"
+                        zIndex={11}
+                      >
+                        <Box
+                          borderBottom="1px solid"
+                          w="100%"
+                          cursor="pointer"
+                          onClick={() => handleSelectProgram("BSAT")}
+                        >
+                          <Text _hover={{ bg: "gray.500" }} px="1rem" py={2}>
+                            BSAT
+                          </Text>
+                        </Box>
+                        <Box cursor="pointer" onClick={() => handleSelectProgram("BSAMT")}>
+                          <Text _hover={{ bg: "gray.500" }} px="1rem" py={2}>
+                            BSAMT
+                          </Text>
+                        </Box>
+                      </Flex>
+                    )}
+                  </Box>
+                  <Box borderBottom="1px solid">
+                    <Text
+                      onMouseEnter={() => handleHoverDepartment("ICS")}
+                      cursor="pointer"
+                      _hover={{ bg: "gray.700" }}
+                      p={2}
+                      
+                    >
+                      ICS
+                    </Text>
+                    {hoveredDepartment === "ICS" && (
+                      <Flex
+                        onMouseLeave={handleLeaveDepartment}
+                        flexDir="column"
+                        justify="center"
+                        textAlign="center"
+                        pos="absolute"
+                        bg="gray.600"
+                        left="100%"
+                        top="2.5rem"
+                        mr="2rem"
+                        w="100%"
+                        zIndex={11}
+                      >
+                        <Box
+                          borderBottom="1px solid"
+                          w="100%"
+                          cursor="pointer"
+                          onClick={() => handleSelectProgram("BSAIT")}
+                        >
+                          <Text _hover={{ bg: "gray.500" }} px="1rem" py={2}>
+                            BSAIT
+                          </Text>
+                        </Box>
+                        <Box cursor="pointer" onClick={() => handleSelectProgram("BSAIS")}>
+                          <Text _hover={{ bg: "gray.500" }} px="1rem" py={2}>
+                            BSAIS
+                          </Text>
+                        </Box>
+                      </Flex>
+                    )}
+                  </Box>
+                  <Box>
+                    <Text
+                      onMouseEnter={() => handleHoverDepartment("ILAS")}
+                      cursor="pointer"
+                      _hover={{ bg: "gray.700" }}
+                      p={2}
+                      
+                    >
+                      ILAS
+                    </Text>
+                    {hoveredDepartment === "ILAS" && (
+                      <Flex
+                        onMouseLeave={handleLeaveDepartment}
+                        flexDir="column"
+                        justify="center"
+                        textAlign="center"
+                        pos="absolute"
+                        bg="gray.600"
+                        left="100%"
+                        top="5.1rem"
+                        w="fit-content"
+                        zIndex={11}
+                      >
+                        <Box
+                          borderBottom="1px solid"
+                          
+                          cursor="pointer"
+                          onClick={() => handleSelectProgram("BSAvComm")}
+                        >
+                          <Text _hover={{ bg: "gray.500" }} px={5} py={2} >
+                            BSAvComm
+                          </Text>
+                        </Box>
+                        <Box cursor="pointer" onClick={() => handleSelectProgram("BSAvLog")}>
+                          <Text _hover={{ bg: "gray.500" }}py={2}>
+                            BSAvLog
+                          </Text>
+                        </Box>
+                      </Flex>
+                    )}
+                  </Box>
+                </Box>
+              </Flex>
+            )}
+          </Box>
         </Flex>
       </Box>
 
       <Tabs colorScheme="purple" variant="enclosed">
-        <TabList py={10} px={5}  >
+        <TabList py={10} px={5}>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Students</Tab>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Faculty</Tab>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Staff</Tab>
@@ -81,13 +246,11 @@ export default function StudIDList() {
                 <StudentId
                   data={data}
                   filterCriteria={filterCriteria}
+                  selectedProgram={selectedProgram}
                   searchQuery={searchQuery}
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
-                  // setDeleteAccount={setDeleteAccount}
-                  // handleViewAccount={handleViewAccount}
-                  // handleEditAccount={handleEditAccount}
                 />
               </ListItem>
             </List>
@@ -103,9 +266,6 @@ export default function StudIDList() {
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
-                  // setDeleteAccount={setDeleteAccount}
-                  // handleViewAccount={handleViewAccount}
-                  // handleEditAccount={handleEditAccount}
                 />
               </ListItem>
             </List>
@@ -121,9 +281,6 @@ export default function StudIDList() {
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
-                  // setDeleteAccount={setDeleteAccount}
-                  // handleViewAccount={handleViewAccount}
-                  // handleEditAccount={handleEditAccount}
                 />
               </ListItem>
             </List>
@@ -133,6 +290,8 @@ export default function StudIDList() {
 
       {selectedStudent && (
         <IdModal
+          data={data}
+          setData={setData}
           isOpen={modalOpen}
           onClose={handleCloseModal}
           student={selectedStudent}

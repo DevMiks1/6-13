@@ -359,7 +359,7 @@ const StudentProfile = ({
                   <FormLabel>Position:</FormLabel>
                   <Input
                     type="text"
-                    name="course"
+                    name="position"
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
                     placeholder="Position"
@@ -371,7 +371,7 @@ const StudentProfile = ({
                   <FormLabel>Designation:</FormLabel>
                   <Input
                     type="text"
-                    name="course"
+                    name="designation"
                     value={designation}
                     onChange={(e) => setDesignation(e.target.value)}
                     placeholder="Designation"
@@ -383,7 +383,7 @@ const StudentProfile = ({
                   <FormLabel>HGT:</FormLabel>
                   <Input
                     type="text"
-                    name="course"
+                    name="hgt"
                     value={hgt}
                     onChange={(e) => setHgt(e.target.value)}
                     placeholder="Height"
@@ -394,13 +394,17 @@ const StudentProfile = ({
                 <>
                   <FormControl isRequired>
                     <FormLabel>Course:</FormLabel>
-                    <Input
-                      type="text"
+                    <Select
                       name="course"
                       value={course}
+                      placeholder="Select Course"
                       onChange={(e) => setCourse(e.target.value)}
-                      placeholder="Course"
-                    />
+                    >
+                      <option value="BSAE">BSAE</option>
+                      <option value="BSAT">BSAT</option>
+                      <option value="BSAMT">BSAMT</option>
+                      <option value="BSAET">BSAET</option>
+                    </Select>
                   </FormControl>
 
                   <FormControl isRequired>

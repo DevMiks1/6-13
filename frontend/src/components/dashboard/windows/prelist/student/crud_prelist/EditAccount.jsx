@@ -80,9 +80,9 @@ const EditAccount = ({ isOpen, onClose, account }) => {
   const employee = ["faculty", "staff"].includes(account.role)
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="lg">
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent  overflowY="auto">
         <ModalHeader>Edit Account</ModalHeader>
         <ModalCloseButton />
 

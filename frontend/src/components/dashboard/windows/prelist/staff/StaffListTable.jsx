@@ -48,8 +48,11 @@ const StaffListTable = ({
     }
   };
 
-  const displayStaff = data
-    .filter((account) => account.role === "staff")
+  const filteredStaff = data.filter((account) => account.role === "staff");
+
+  const pageCount = Math.ceil(filteredStaff.length / staffPerPage);
+
+  const displayStaff = filteredStaff.reverse()
     .slice(currentPage * staffPerPage, (currentPage + 1) * staffPerPage)
     .map((account) => (
 
@@ -62,6 +65,9 @@ const StaffListTable = ({
           <Button
             size="sm"
             leftIcon={<ViewIcon />}
+            bg="blue.200"
+            color="blue.900"
+            _hover={{ bg: "blue.300" }}
             mr={2}
             onClick={() => {
               handleViewAccounts(account._id);
@@ -72,6 +78,9 @@ const StaffListTable = ({
           <Button
             size="sm"
             leftIcon={<EditIcon />}
+            bg="green.200"
+            color="green.900"
+            _hover={{ bg: "green.300" }}
             mr={2}
             onClick={() => {
               handleEditAccounts(account._id);
@@ -81,13 +90,14 @@ const StaffListTable = ({
           </Button>
           <Button
             size="sm"
-            bg="red.500"
-            color="white"
+            bg="red.200"
+            color="red.900"
+            _hover={{ bg: "red.300" }}
             leftIcon={<DeleteIcon />}
             onClick={() => {
               handleDeleteAccounts(account._id);
             }}
-            _hover={{ bg: "red.600" }}
+           
           >
             Delete
           </Button>
@@ -96,9 +106,7 @@ const StaffListTable = ({
 
     ));
 
-  const filteredStaff = data.filter((account) => account.role === "staff");
 
-  const pageCount = Math.ceil(filteredStaff.length / staffPerPage);
 
 
   return (

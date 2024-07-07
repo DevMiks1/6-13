@@ -13,23 +13,23 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
 
 const StudentId = ({
   data,
   filterCriteria,
   searchQuery,
+  selectedProgram,
   handleViewClick,
   currentPage,
   handlePageClick,
 }) => {
   const studentsPerPage = 5;
 
-  const filteredStudentsId = data.filter(
-    (account) => account.role === "student"
-  );
-  const pageCount = Math.ceil(filteredStudentsId.length / studentsPerPage);
+  // Filter students based on role
+  const filteredStudentsId = data.filter((account) => account.role === "student");
+
+  // Apply search and filter criteria
   const filteredStudents = filteredStudentsId
     .filter((student) => {
       const fullName = `${student.firstname} ${student.lastname}`;
@@ -37,13 +37,20 @@ const StudentId = ({
     })
     .filter((student) => {
       if (filterCriteria === "") return true;
-      return filterCriteria === "issued"
-        ? student.isIdIssued
-        : !student.isIdIssued;
+      return filterCriteria === "issued" ? student.isIdIssued : !student.isIdIssued;
     })
-    .slice(currentPage * studentsPerPage, (currentPage + 1) * studentsPerPage);
+    .filter((student) => {
+      if (selectedProgram === "") return true;
+      return selectedProgram === student.course ? student.course : ""    });
 
-  const displayStudents = filteredStudents.map((student) => (
+  // Pagination logic
+  const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
+  const displayedStudents = filteredStudents.slice(
+    currentPage * studentsPerPage,
+    (currentPage + 1) * studentsPerPage
+  );
+
+  const displayStudents = displayedStudents.map((student) => (
     <Tr key={student._id}>
       <Td>
         {student.firstname} {student.lastname}
@@ -76,16 +83,15 @@ const StudentId = ({
             {displayStudents.length > 0 ? (
               displayStudents
             ) : (
-                <Tr>
+              <Tr>
                 <Td colSpan={3} textAlign="center">
-                    <Text fontSize="20px" fontWeight="bold" pt={20}>
-                        {filterCriteria === 'issued' 
-                            ? "There are no issued IDs for now."
-                            : "There are no non-issued IDs for now."
-                        }
-                    </Text>
+                  <Text fontSize="20px" fontWeight="bold" pt={20}>
+                    {filterCriteria === "issued"
+                      ? "There are no issued IDs for now."
+                      : "There are no non-issued IDs for now."}
+                  </Text>
                 </Td>
-            </Tr>
+              </Tr>
             )}
           </Tbody>
         </Table>

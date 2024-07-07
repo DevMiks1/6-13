@@ -48,8 +48,10 @@ const InstructorListTable = ({
     }
   };
 
-  const displayFaculty = data
-    .filter((account) => account.role === "faculty")
+  const filteredFaculty = data.filter((account) => account.role === "faculty");
+  const pageCount = Math.ceil(filteredFaculty.length / facultyPerPage);
+
+  const displayFaculty = filteredFaculty.reverse()
     .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage)
     .map((account) => (
       <Tr key={account._id}>
@@ -61,16 +63,23 @@ const InstructorListTable = ({
           <Button
             size="sm"
             leftIcon={<ViewIcon />}
+            bg="blue.200"
+            color="blue.900"
+            _hover={{ bg: "blue.300" }}
             mr={2}
             onClick={() => {
               handleViewAccounts(account._id);
             }}
+           
           >
             View
           </Button>
           <Button
             size="sm"
             leftIcon={<EditIcon />}
+            bg="green.200"
+            color="green.900"
+            _hover={{ bg: "green.300" }}
             mr={2}
             onClick={() => {
               handleEditAccounts(account._id);
@@ -80,13 +89,14 @@ const InstructorListTable = ({
           </Button>
           <Button
             size="sm"
-            bg="red.500"
-            color="white"
+            bg="red.200"
+            color="red.900"
+            _hover={{ bg: "red.300" }}
             leftIcon={<DeleteIcon />}
             onClick={() => {
               handleDeleteAccounts(account._id);
             }}
-            _hover={{ bg: "red.600" }}
+            
           >
             Delete
           </Button>
@@ -94,8 +104,7 @@ const InstructorListTable = ({
       </Tr>
     ));
 
-  const filteredFaculty = data.filter((account) => account.role === "faculty");
-  const pageCount = Math.ceil(filteredFaculty.length / facultyPerPage);
+
 
  
   // console.log(filteredFaculty);

@@ -113,7 +113,7 @@ const LogIn = () => {
             isClosable: true,
             position: "bottom",
           });
-          navigate("/dashboard", { replace: true });
+          navigate("/face", { replace: true });
         } catch (error) {
           console.error("Authentication error:", error);
           toast({

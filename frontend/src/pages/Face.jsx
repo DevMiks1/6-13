@@ -1,13 +1,15 @@
 // import React, { useEffect, useRef, useState } from "react";
 // import * as faceapi from "face-api.js";
+// import { useNavigate } from "react-router-dom";
 
-// const Face = () => {
+// const Face = ({ onFaceRecognized }) => {
 //   const [initial, setInitial] = useState(false);
 //   const [isRecognizing, setIsRecognizing] = useState(false);
 //   const videoHeight = 480;
 //   const videoWidth = 640;
 //   const videoRef = useRef();
 //   const canvasRef = useRef();
+//   const navigate = useNavigate();
 
 //   useEffect(() => {
 //     const loadModels = async () => {
@@ -41,37 +43,48 @@
 //   };
 
 //   const handleVideoOnPlay = () => {
-//     setInterval(async () => {
-//       if (initial) {
-//         setInitial(false);
-//       }
-//       const canvas = faceapi.createCanvasFromMedia(videoRef.current);
-//       canvasRef.current.innerHTML = "";
-//       canvasRef.current.append(canvas);
+//     const intervalId = setInterval(async () => {
+//         if (initial) {
+//             setInitial(false);
+//         }
 
-//       const displaySize = { width: videoWidth, height: videoHeight };
-//       faceapi.matchDimensions(canvas, displaySize);
+//         // Ensure video has loaded metadata (dimensions) before creating canvas
+//         if (videoRef.current.readyState !== 4) {
+//             return; // Wait until the video is fully loaded
+//         }
 
-//       const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
-//       const resizeDetections = faceapi.resizeResults(detections, displaySize);
+//         const canvas = faceapi.createCanvasFromMedia(videoRef.current);
+//         canvasRef.current.innerHTML = ""; // Clear previous canvases
+//         canvasRef.current.append(canvas); // Append new canvas
 
-//       const context = canvas.getContext("2d");
-//       context.clearRect(0, 0, videoWidth, videoHeight);
+//         const displaySize = { width: videoWidth, height: videoHeight };
+//         faceapi.matchDimensions(canvas, displaySize);
 
-//       if (detections.length > 0) {
-//         faceapi.draw.drawDetections(canvas, resizeDetections);
-//         faceapi.draw.drawFaceLandmarks(canvas, resizeDetections);
-//         faceapi.draw.drawFaceExpressions(canvas, resizeDetections);
-//       } else {
-//         // Draw a placeholder rectangle as a hint
-//         context.strokeStyle = "red";
-//         context.lineWidth = 4;
-//         context.strokeRect(videoWidth / 2 - 50, videoHeight / 2 - 50, 100, 100);
-//       }
+//         const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+//         const resizeDetections = faceapi.resizeResults(detections, displaySize);
 
-//       console.log(detections);
+//         const context = canvas.getContext("2d");
+//         context.clearRect(0, 0, videoWidth, videoHeight);
+
+//         if (detections.length > 0) {
+//             faceapi.draw.drawDetections(canvas, resizeDetections);
+//             faceapi.draw.drawFaceLandmarks(canvas, resizeDetections);
+//             faceapi.draw.drawFaceExpressions(canvas, resizeDetections);
+
+//             onFaceRecognized();
+//             clearInterval(intervalId); // Stop interval after recognition
+//             navigate("/dashboard");
+//         } else {
+//             // Draw a placeholder rectangle as a hint
+//             context.strokeStyle = "red";
+//             context.lineWidth = 4;
+//             context.strokeRect(videoWidth / 2 - 50, videoHeight / 2 - 50, 100, 100);
+//         }
+
+//         console.log(detections);
 //     }, 1000);
-//   };
+// };
+
 
 //   return (
 //     <div className="flex flex-col items-center justify-center h-screen">
