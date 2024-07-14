@@ -48,7 +48,7 @@ export const SideBar = ({ setTab, tab }) => {
           {[
             { tabName: "prelist", label: "Accounts", icon: FaUser },
             { tabName: "studlistid", label: "ID List", icon: FaList },
-            { tabName: "graphsandanalytics", label: "Graphs & Analytics", icon: FaChartBar },
+            { tabName: "graphsandanalytics", label: "Status Panel", icon: FaChartBar },
             { tabName: "reports", label: "ID Lost Record", icon: FaFileAlt },
             { tabName: "settings", label: "Settings", icon: FaCog },
           ].map((item) => (
