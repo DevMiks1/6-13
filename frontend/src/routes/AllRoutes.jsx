@@ -9,7 +9,7 @@ import Face from "../pages/Face";
 
 const AllRoutes = () => {
   const { user } = useAuth();
-  const [isFaceRecognized, setIsFaceRecognized] = useState(false);
+  const [isFaceRecognized, setIsFaceRecognized] = useState(true);
   const navigate = useNavigate();
 
  
@@ -34,10 +34,10 @@ const AllRoutes = () => {
         path="/dashboard"
         element={ <DashBoard />}
       />
-      <Route
+      {/* <Route
         path="/face"
-        element={user && isFaceRecognized ? <Navigate to="/dashboard" replace /> : <Face onFaceRecognized={() => setIsFaceRecognized(true)} />}
-      />
+        // element={user && isFaceRecognized ? <Navigate to="/dashboard" replace /> : <Face onFaceRecognized={() => setIsFaceRecognized(true)} />}
+      /> */}
       <Route element={<ProtectedRoutes />}>
         <Route path="*" element={<PageNotFound />} />
       </Route>

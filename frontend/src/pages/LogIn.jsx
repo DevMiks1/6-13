@@ -113,7 +113,7 @@ const LogIn = () => {
             isClosable: true,
             position: "bottom",
           });
-          navigate("/face", { replace: true });
+          navigate("/dashboard", { replace: true });
         } catch (error) {
           console.error("Authentication error:", error);
           toast({
@@ -123,7 +123,7 @@ const LogIn = () => {
             isClosable: true,
             position: "bottom",
           });
-        }
+        } 
       } else {
         toast({
           title: "Password does not match or check the role",
