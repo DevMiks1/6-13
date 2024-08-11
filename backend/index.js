@@ -5,9 +5,10 @@ require("dotenv").config()
 const jwtAuth = require('./middleware/authmiddleware');
 
 const app = express()
-const port = 8800 || 5001
+const port = 8400 || 5001
 
 // MIDDLEWARE
+app.use(express.json()); 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
@@ -19,6 +20,8 @@ database();
 // user accounts
 const accountsRoutes = require("./routes/AccountRoutes");
 app.use("/accounts", accountsRoutes);
+const emailRoutes = require("./routes/EmailRoutes");
+app.use("/email", emailRoutes);
 
 
 app.listen(port, () => {

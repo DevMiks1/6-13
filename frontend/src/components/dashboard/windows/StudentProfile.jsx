@@ -53,7 +53,7 @@ const StudentProfile = ({
   const toast = useToast();
   const [images, setImages] = useState([]);
   const [firstname, setFirstname] = useState("");
-  const [suffix, setSuffix] = useState("");
+  const [middlename, setMiddlename] = useState("");
   const [lastname, setLastname] = useState("");
   const [course, setCourse] = useState("");
   const [position, setPosition] = useState("");
@@ -77,7 +77,9 @@ const StudentProfile = ({
   const accountLogin = () => {
     return data.find((d) => d._id === authId);
   };
-
+  const datas = () => data.map((d) => d);
+  const allAccount = datas();
+  console.log(allAccount, "All");
   const user = accountLogin();
   console.log(user);
 
@@ -111,7 +113,7 @@ const StudentProfile = ({
       picture: imageSecureUrl,
       firstname: firstname,
       lastname: lastname,
-      suffix: suffix,
+      middlename: middlename,
       course: course,
       year: year,
       birthdate: birthdate,
@@ -124,7 +126,6 @@ const StudentProfile = ({
       wgt: wgt,
       sss: sss,
       tin: tin,
-      
     };
     console.log(updatedUser);
 
@@ -221,7 +222,8 @@ const StudentProfile = ({
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={InfoIcon} color="#FFD700" />
-                Name: {`${user.firstname} ${user.suffix} ${user.lastname}`}
+                Name:{" "}
+                {`${user.firstname} ${user.middlename} ${user.suffix} ${user.lastname}`}
               </ListItem>
               <ListItem>
                 <ListIcon as={InfoIcon} color="#FFD700" />
@@ -304,7 +306,7 @@ const StudentProfile = ({
 
           <Divider borderColor="gray.400" />
 
-          <CardFooter >
+          <CardFooter>
             <HStack>
               <Button onClick={onOpen} variant="ghost" leftIcon={<EditIcon />}>
                 Edit Personal Details
@@ -316,7 +318,7 @@ const StudentProfile = ({
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent overflowY="auto" maxH="500">
           <ModalHeader>Personal Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxW="600px">
@@ -332,13 +334,13 @@ const StudentProfile = ({
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>Suffx:</FormLabel>
+                <FormLabel>Middlename:</FormLabel>
                 <Input
                   type="text"
-                  name="suffix"
-                  value={suffix}
-                  onChange={(e) => setSuffix(e.target.value)}
-                  placeholder="Suffix"
+                  name="middlename"
+                  value={middlename}
+                  onChange={(e) => setMiddlename(e.target.value)}
+                  placeholder="Middlename"
                 />
               </FormControl>
               <FormControl isRequired>
@@ -400,10 +402,10 @@ const StudentProfile = ({
                       placeholder="Select Course"
                       onChange={(e) => setCourse(e.target.value)}
                     >
-                      <option value="BSAE">BSAE</option>
-                      <option value="BSAT">BSAT</option>
-                      <option value="BSAMT">BSAMT</option>
-                      <option value="BSAET">BSAET</option>
+                      <option value="bsamt">BSAMT</option>
+                      <option value="bsat">BSAT</option>
+                      <option value="bsa">BSAIT</option>
+                      <option value="bsavlog">BSAvLog</option>
                     </Select>
                   </FormControl>
 
@@ -419,12 +421,11 @@ const StudentProfile = ({
                       <option value="2nd">2nd</option>
                       <option value="3rd">3rd</option>
                       <option value="4th">4th</option>
+                      <option value="5th">5yj</option>
                     </Select>
                   </FormControl>
                 </>
               )}
-
-              
             </Flex>
 
             <Flex gap={5} pb={5}>
@@ -561,19 +562,19 @@ const StudentProfile = ({
             </div>
           </ModalBody>
 
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
 
-              <Button
-                colorScheme="green"
-                onClick={handleSubmit}
-                isLoading={isLoading}
-              >
-                Update
-              </Button>
-            </ModalFooter>
+            <Button
+              colorScheme="green"
+              onClick={handleSubmit}
+              isLoading={isLoading}
+            >
+              Update
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

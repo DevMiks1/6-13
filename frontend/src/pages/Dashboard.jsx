@@ -23,6 +23,7 @@ const DashBoard = () => {
     return data.find((d) => d._id === authId);
   };
   const user = accountLogin();
+  console.log(user);
 
   useEffect(() => {
     

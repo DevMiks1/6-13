@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   Flex,
+  IconButton,
   Table,
   Tbody,
   Td,
@@ -57,7 +58,6 @@ const StudentListTable = ({
   const filteredStudents = data.filter((account) => account.role === "student");
   const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
 
-
   const displayStudents = filteredStudents
     .reverse()
     .slice(currentPage * studentsPerPage, (currentPage + 1) * studentsPerPage)
@@ -68,63 +68,38 @@ const StudentListTable = ({
         <Td>{account.course}</Td>
 
         <Td>
-          <Button
-            size="sm"
-            leftIcon={<ViewIcon />}
-            bg="blue.200"
-            color="blue.900"
-            mr={2}
+          <Flex gap={2}>
+          <IconButton
+            colorScheme="blue"
+            aria-label="View"
             onClick={() => {
               handleViewAccounts(account._id);
             }}
-            _hover={{ bg: "blue.300" }}
-          >
-            View
-          </Button>
-          <Button
-            size="sm"
-            leftIcon={<EditIcon />}
-            bg="green.200"
-            color="green.900"
-            _hover={{ bg: "green.300" }}
-            mr={2}
+            size="lg"
+            icon={<ViewIcon />}
+          />
+          <IconButton
+            colorScheme="green"
+            aria-label="Edit"
             onClick={() => {
               handleEditAccounts(account._id);
             }}
-            
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            bg="red.200"
-            color="red.900"
-            _hover={{ bg: "red.300" }}
-            leftIcon={<DeleteIcon />}
-            mr={2}
+            size="lg"
+            icon={<EditIcon />}
+          />
+          <IconButton
+            colorScheme="red"
+            aria-label="Delete"
             onClick={() => {
               handleDeleteAccounts(account._id);
             }}
-            
-          >
-            Delete
-          </Button>
-          {/* <Button
-            size="sm"
-            bg="red.500"
-            color="white"
-            leftIcon={<DeleteIcon />}
-            onClick={() => {
-              handleDelete(account._id);
-            }}
-            _hover={{ bg: "red.600" }}
-          >
-            Issue ID
-          </Button> */}
+            size="lg"
+            icon={<DeleteIcon />}
+          />
+          </Flex>
         </Td>
       </Tr>
     ));
-
 
   return (
     <>

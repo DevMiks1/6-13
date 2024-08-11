@@ -55,6 +55,12 @@ const ProfileModal = ({ setProfile, handleLogout }) => {
             duration: 2000,
             isClosable: true,
             position: "bottom",
+
+
+
+
+
+            
           });
           setNewPassword(""); // Reset the newPassword state
         setOldPassword(""); // Reset the oldPassword state

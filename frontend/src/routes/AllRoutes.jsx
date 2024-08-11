@@ -8,14 +8,14 @@ import PageNotFound from "../pages/PageNotFound";
 import Face from "../pages/Face";
 
 const AllRoutes = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isFaceRecognized, setIsFaceRecognized] = useState(true);
   const navigate = useNavigate();
 
- 
   useEffect(() => {
-    if (!user) {
+    if (user === null) {
       navigate("/", { replace: true });
+      setIsFaceRecognized(false); 
     } else if (user && isFaceRecognized) {
       navigate("/dashboard", { replace: true });
     } else if (user && !isFaceRecognized) {
@@ -29,15 +29,12 @@ const AllRoutes = () => {
       <Route
         path="/dashboard"
         element={user && isFaceRecognized ? <DashBoard /> : <Navigate to="/face" replace />}
+        // element={<DashBoard /> }
       />
       <Route
-        path="/dashboard"
-        element={ <DashBoard />}
-      />
-      {/* <Route
         path="/face"
-        // element={user && isFaceRecognized ? <Navigate to="/dashboard" replace /> : <Face onFaceRecognized={() => setIsFaceRecognized(true)} />}
-      /> */}
+        element={user && isFaceRecognized ? <Navigate to="/dashboard" replace /> : <Face onFaceRecognized={() => setIsFaceRecognized(true)} />}
+      />
       <Route element={<ProtectedRoutes />}>
         <Route path="*" element={<PageNotFound />} />
       </Route>

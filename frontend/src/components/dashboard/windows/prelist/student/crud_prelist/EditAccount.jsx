@@ -19,20 +19,19 @@ import {
   Avatar,
   Wrap,
   Flex,
+  Select,
 } from "@chakra-ui/react";
 import { updateAccountAPI } from "../../../../../api/AccountsApi";
 import { useData } from "../../../../../context/FetchAccountContext";
-
 
 const EditAccount = ({ isOpen, onClose, account }) => {
   const { data, setData } = useData();
   const [isLoading, setIsLoading] = useState(false);
 
-
   const toast = useToast();
 
   const [formData, setFormData] = useState(
-    account || { userId: "", name: "", course: "", year: "" }
+    account || { name: "", course: "", schoolyear: "", middlename: "" }
   );
 
   useEffect(() => {
@@ -61,7 +60,7 @@ const EditAccount = ({ isOpen, onClose, account }) => {
       // Make sure formData has the _id field for identifying the account
       const updatedAccount = { body: formData, _id: account._id };
 
-      const response = await updateAccountAPI(updatedAccount)
+      const response = await updateAccountAPI(updatedAccount);
       if (response) {
         const updatedData = data.map((el) =>
           el._id === account._id ? { ...el, ...formData } : el
@@ -76,39 +75,41 @@ const EditAccount = ({ isOpen, onClose, account }) => {
     }
   };
 
-  const students = account.role === "student"
-  const employee = ["faculty", "staff"].includes(account.role)
+  const students = account.role === "student";
+  const employee = ["faculty", "staff"].includes(account.role);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="lg" >
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
-      <ModalContent  overflowY="auto">
+      <ModalContent overflowY="auto" maxH="500">
         <ModalHeader>Edit Account</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
-    
-          <FormControl pb={5}>
-            <FormLabel>{employee ? "Employee ID" : "Student ID"}</FormLabel>
-            <Input
-              name="userId"
-              disabled
-              value={formData.userId}
-              onChange={handleChange}
-            />
-          </FormControl>
           <Flex gap={3} pb={5}>
             <FormControl>
               <FormLabel>Firstname</FormLabel>
-              <Input name="firstname" value={formData.firstname} onChange={handleChange} />
+              <Input
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange}
+              />
             </FormControl>
             <FormControl>
-              <FormLabel>Suffix</FormLabel>
-              <Input name="suffix" value={formData.suffix} onChange={handleChange} />
+              <FormLabel>Middlename</FormLabel>
+              <Input
+                name="middlename"
+                value={formData.middlename}
+                onChange={handleChange}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Lastname</FormLabel>
-              <Input name="lastname" value={formData.lastname} onChange={handleChange} />
+              <Input
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+              />
             </FormControl>
           </Flex>
 
@@ -145,15 +146,38 @@ const EditAccount = ({ isOpen, onClose, account }) => {
               <>
                 <FormControl>
                   <FormLabel>Course</FormLabel>
-                  <Input
+
+                  <Select
                     name="course"
-                    value={formData.course}
                     onChange={handleChange}
-                  />
+                    value={formData.course}
+                  >
+                    <option value="" disabled>
+                      Select course
+                    </option>
+                    <option value="bsamt">BSAMT</option>
+                    <option value="bsat">BSAT</option>
+                    <option value="bsa">BSAIT</option>
+                    <option value="bsavlog">BSAvLog</option>
+                  </Select>
                 </FormControl>
                 <FormControl>
-                  <FormLabel>Year</FormLabel>
-                  <Input name="year" value={formData.year} onChange={handleChange} />
+                  <FormLabel>SchoolYear</FormLabel>
+
+                  <Select
+                    name="schoolyear"
+                    onChange={handleChange}
+                    value={formData.schoolyear}
+                  >
+                    <option value="" disabled>
+                      Select year
+                    </option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                    <option value="5th">5th</option>
+                  </Select>
                 </FormControl>
               </>
             )}
@@ -191,7 +215,6 @@ const EditAccount = ({ isOpen, onClose, account }) => {
           </Flex>
 
           <Flex gap={3} pb={5}>
-
             <>
               <FormControl>
                 <FormLabel>Contact Person</FormLabel>
@@ -210,36 +233,37 @@ const EditAccount = ({ isOpen, onClose, account }) => {
                   onChange={handleChange}
                 />
               </FormControl>
-
             </>
-
           </Flex>
           <Flex gap={3}>
             <>
-            <FormControl>
-                  <FormLabel>Birthdate</FormLabel>
-                  <Input
-                    type="date"
-                    name="birthdate"
-                    value={formData.birthdate}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Contact Number</FormLabel>
-                  <Input
-                    name="contactnumber"
-                    value={formData.contactnumber}
-                    onChange={handleChange}
-                  />
-                </FormControl>
+              <FormControl>
+                <FormLabel>Birthdate</FormLabel>
+                <Input
+                  type="date"
+                  name="birthdate"
+                  value={formData.birthdate}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Contact Number</FormLabel>
+                <Input
+                  name="contactnumber"
+                  value={formData.contactnumber}
+                  onChange={handleChange}
+                />
+              </FormControl>
             </>
           </Flex>
-
-
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit} isLoading={isLoading}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            onClick={handleSubmit}
+            isLoading={isLoading}
+          >
             Save
           </Button>
           <Button variant="ghost" onClick={onClose}>

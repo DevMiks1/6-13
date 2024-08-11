@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
@@ -22,10 +20,8 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAuth } from "../components/context/Auth";
-import bgImage from "../assets/bg2-1024x574.jpg"
-import logo from "../assets/philscalogo.png"
-
-// import { m } from "framer-motion";
+import bgImage from "../assets/bg2-1024x574.jpg";
+import logo from "../assets/philscalogo.png";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -89,6 +85,7 @@ const LogIn = () => {
 
   const signIn = async () => {
     const userToSignIn = allUser.find((user) => user.email === email);
+    console.log(userToSignIn);
     if (userToSignIn) {
       const stored = {
         _id: userToSignIn._id,
@@ -98,14 +95,13 @@ const LogIn = () => {
         role: userToSignIn.role,
         picture: userToSignIn.picture,
       };
-
+      console.log(stored);
       if (
         userToSignIn.password === password &&
         userToSignIn.role === role.toLowerCase()
       ) {
         try {
           auth.login(stored);
-          // localStorage.setItem("user", userToSignIn._id);
           toast({
             title: "Successfully Logged In",
             status: "success",
@@ -113,7 +109,7 @@ const LogIn = () => {
             isClosable: true,
             position: "bottom",
           });
-          navigate("/dashboard", { replace: true });
+          navigate("/face", { replace: true }); // Redirect to face recognition
         } catch (error) {
           console.error("Authentication error:", error);
           toast({
@@ -123,7 +119,7 @@ const LogIn = () => {
             isClosable: true,
             position: "bottom",
           });
-        } 
+        }
       } else {
         toast({
           title: "Password does not match or check the role",
@@ -184,7 +180,6 @@ const LogIn = () => {
     <Box
       height="100vh"
       position="relative"
-      // bg="purple.400"
       _before={{
         content: '""',
         position: "absolute",
@@ -199,7 +194,6 @@ const LogIn = () => {
         zIndex: -1,
       }}
     >
-      
       <Box
         position="absolute"
         inset="0"

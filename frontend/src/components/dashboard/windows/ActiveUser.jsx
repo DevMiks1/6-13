@@ -6,7 +6,7 @@ import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, F
 
 const ActiveUser = ({filteredStudents, filteredFaculty, filteredStaff}) => {
   return (
-    <Flex gap={5} justify="center">
+    <Flex gap={5} flexWrap="wrap" flexDir={{base: 'column', md:"row"}}>
       <Card
         borderTopWidth="8px"
         borderTopColor="blue.700"
@@ -29,9 +29,6 @@ const ActiveUser = ({filteredStudents, filteredFaculty, filteredStaff}) => {
           </Flex>
         </CardHeader>
 
-        {/* <CardBody color="gray.500">
-    <Text>{detail.description}</Text>
-  </CardBody> */}
 
         <Divider borderColor="gray.200" />
 

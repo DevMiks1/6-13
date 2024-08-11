@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -22,18 +22,19 @@ const StaffId = ({
   searchQuery,
   handleViewClick,
   currentPage,
+  handleOpenMail,
   handlePageClick,
 }) => {
-  const staffPerPage = 5;
+  const staffPerPage = 4;
 
   const filteredStaffId = data.filter(
     (account) => account.role === "staff"
   );
-  console.log(data);
   const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);
 
 
   const filteredStaff = filteredStaffId
+    .reverse()
     .filter((staff) => {
       const fullName = `${staff.firstname} ${staff.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -52,14 +53,25 @@ const StaffId = ({
         {staff.firstname} {staff.lastname}
       </Td>
       <Td>{staff.course}</Td>
+      <Td>{staff.isIdIssued}</Td>
       <Td>
         <Button
           size="sm"
+          mr={5}
           leftIcon={<ViewIcon />}
           onClick={() => handleViewClick(staff)}
         >
           View
         </Button>
+        {staff.isIdIssued && (
+          <Button
+          size="sm"
+          leftIcon={<EmailIcon />}
+          onClick={() => handleOpenMail(staff)}
+        >
+          Email
+        </Button>
+        )}
       </Td>
     </Tr>
   ));

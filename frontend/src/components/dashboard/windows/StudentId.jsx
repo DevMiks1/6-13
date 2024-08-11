@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -21,16 +21,18 @@ const StudentId = ({
   searchQuery,
   selectedProgram,
   handleViewClick,
+  handleOpenMail,
   currentPage,
   handlePageClick,
 }) => {
-  const studentsPerPage = 5;
+  const studentsPerPage = 4;
 
   // Filter students based on role
   const filteredStudentsId = data.filter((account) => account.role === "student");
 
   // Apply search and filter criteria
   const filteredStudents = filteredStudentsId
+    .reverse()
     .filter((student) => {
       const fullName = `${student.firstname} ${student.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -58,12 +60,23 @@ const StudentId = ({
       <Td>{student.course}</Td>
       <Td>
         <Button
+          mr={5}
           size="sm"
           leftIcon={<ViewIcon />}
           onClick={() => handleViewClick(student)}
         >
           View
         </Button>
+        {student.isIdIssued && (
+          <Button
+          size="sm"
+          leftIcon={<EmailIcon />}
+          onClick={() => handleOpenMail(student)}
+        >
+          Email
+        </Button>
+        )}
+        
       </Td>
     </Tr>
   ));

@@ -29,7 +29,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
   const toast = useToast();
   const componentRef = useRef();
   const printRef = useRef();
-  const handleUpdateStatus = async () => {
+  const handlePrintAndUpdateStatus = async () => {
     setIsLoading(true);
     try {
       // Update the student's status to "issued"
@@ -37,6 +37,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
         body: { isIdIssued: true },
         _id: student._id,
       });
+
       if (response) {
         const updatedData = data.map((el) =>
           el._id === student._id ? { ...el, isIdIssued: true } : el
@@ -49,7 +50,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
           duration: 5000,
           isClosable: true,
         });
-        return true; // Indicate success
+        // Close the modal after updating the status
+        onClose();
       }
     } catch (error) {
       toast({
@@ -62,14 +64,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
     } finally {
       setIsLoading(false);
     }
-    return false; // Indicate failure
-  };
-
-  const handlePrint = () => {
-    printRef.current.handlePrint();
   };
   const showPrintButton = data.some((item) => !item.isIdIssued );
-  console.log(showPrintButton);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -162,15 +158,15 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     mb={3}
                   >
                     {student.firstname === "" && student.lastname === "" ? (
-                      <Text>FULLNAME</Text>
+                      <Text>EMPTY</Text>
                     ) : (
                       <Heading size="md" color="black">
-                        {`${student.firstname} ${student.suffix} ${student.lastname}`}
+                        {`${student.firstname} ${student.middlename} ${student.lastname}`}
                       </Heading>
                     )}
 
                     {student.schoolid === "" ? (
-                      <Text>StudentId</Text>
+                      <Text>EMPTY</Text>
                     ) : (
                       <Text fontSize="lg" color="black">
                         {student.schoolid}
@@ -178,7 +174,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     )}
 
                     {student.course === "" ? (
-                      <Text>COURSE</Text>
+                      <Text>EMPTY</Text>
                     ) : (
                       <Text fontSize="lg" color="black">
                         {student.course}
@@ -193,20 +189,26 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
         </ModalBody>
         <ModalFooter>
           <ButtonGroup spacing="2">
-          {showPrintButton && !student.isIdIssued && (
-              <Button
-                variant="solid"
-                colorScheme="blue"
-                onClick={handlePrint}
-                isLoading={isLoading}
-              >
-                Print ID
-              </Button>
-            )}
 
             <Button variant="solid" colorScheme="blue" onClick={onClose}>
               Cancel
             </Button>
+          {showPrintButton && !student.isIdIssued &&  (
+              <ReactToPrint
+                trigger={() => (
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    isLoading={isLoading}
+                  >
+                    Print ID
+                  </Button>
+                )}
+                content={() => componentRef.current}
+                ref={printRef}
+                onAfterPrint={handlePrintAndUpdateStatus} // This is the callback function after the print is successful
+              />
+            )}
           </ButtonGroup>
         </ModalFooter>
       </ModalContent>
@@ -214,7 +216,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
         trigger={() => <span style={{ display: "none" }}>Print</span>}
         content={() => componentRef.current}
         ref={printRef}
-        onAfterPrint={handleUpdateStatus} // This is the callback function after the print is successful
+        onAfterPrint={handlePrintAndUpdateStatus} // This is the callback function after the print is successful
       />
     </Modal>
   );

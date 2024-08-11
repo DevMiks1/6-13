@@ -106,7 +106,7 @@ export const SideBar = ({ setTab, tab }) => {
   );
 
   return (
-    <Box pos="fixed" left={0} top={0} bg="blue.700" h="100vh" px={3} w={{ base: "15%", lg: "20%", xl: "17%" }}>
+    <Box pos="fixed" left={0} top={0} bg="blue.700" color='white' h="100vh" px={3} w={{ base: "15%", lg: "20%", xl: "17%" }}>
       {/* DRAWER BUTTON */}
       <Box
         cursor="pointer"
@@ -136,14 +136,14 @@ export const SideBar = ({ setTab, tab }) => {
           <DrawerContent bg="blue.700">
             <DrawerCloseButton color="white" />
             <DrawerBody p={0}>
-              <Flex flexDir="column" justify="space-between" h="100%" py={5}>
+              <Flex flexDir="column" justify="space-between" h="100%" py={5} color="white">
                 <Flex flexDir="column" mt={5} px={3}>
                   {data.map(renderLinks)}
                   {data.filter(
                     (user) => ["student", "faculty", "staff"].includes(user.role) && user._id === authId
                   ).map(renderUserLinks)}
                 </Flex>
-                <Box>
+                <Box px={3}>
                   <Profile allUsers={data} authId={authId} />
                 </Box>
               </Flex>

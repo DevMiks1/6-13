@@ -6,8 +6,8 @@ import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, F
 
 const ActiveId = ({filteredIssuedId, filteredNonIssuedId}) => {
   return (
-    <Flex gap={5} justify="center">
-      <Card borderTopWidth="8px" borderTopColor="blue.700" bg="white" shadow="lg">
+    <Flex gap={5} flexWrap="wrap" flexDir={{base: 'column', md:"row"}}>
+      <Card borderTopWidth="8px" borderTopColor="blue.700" bg="white" shadow="lg" >
           <CardHeader color="gray.700">
             <Flex gap={5}>
               <Box w="50px" h="50px">

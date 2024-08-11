@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -21,19 +21,21 @@ const FacultyId = ({
   filterCriteria,
   searchQuery,
   handleViewClick,
+  handleOpenMail,
   currentPage,
   handlePageClick,
 }) => {
-  const facultyPerPage = 5;
+  const facultyPerPage = 4;
 
   const filteredFacultyId = data.filter(
     (account) => account.role === "faculty"
   );
   console.log(data);
+  console.log(filteredFacultyId);
   const pageCount = Math.ceil(filteredFacultyId.length / facultyPerPage);
 
-
   const filteredFacuty = filteredFacultyId
+    .reverse()
     .filter((faculty) => {
       const fullName = `${faculty.firstname} ${faculty.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -45,7 +47,7 @@ const FacultyId = ({
         : !faculty.isIdIssued;
     })
     .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
-
+  console.log(filteredFacuty);
   const displayFaculty = filteredFacuty.map((faculty) => (
     <Tr key={faculty._id}>
       <Td>
@@ -55,11 +57,21 @@ const FacultyId = ({
       <Td>
         <Button
           size="sm"
+          mr={5}
           leftIcon={<ViewIcon />}
           onClick={() => handleViewClick(faculty)}
         >
           View
         </Button>
+        {faculty.isIdIssued && (
+          <Button
+          size="sm"
+          leftIcon={<EmailIcon />}
+          onClick={() => handleOpenMail(faculty)}
+        >
+          Email
+        </Button>
+        )}
       </Td>
     </Tr>
   ));
@@ -79,16 +91,15 @@ const FacultyId = ({
             {displayFaculty.length > 0 ? (
               displayFaculty
             ) : (
-                <Tr>
+              <Tr>
                 <Td colSpan={3} textAlign="center">
-                    <Text fontSize="20px" fontWeight="bold" pt={20}>
-                        {filterCriteria === 'issued' 
-                            ? "There are no issued IDs for now."
-                            : "There are no non-issued IDs for now."
-                        }
-                    </Text>
+                  <Text fontSize="20px" fontWeight="bold" pt={20}>
+                    {filterCriteria === "issued"
+                      ? "There are no issued IDs for now."
+                      : "There are no non-issued IDs for now."}
+                  </Text>
                 </Td>
-            </Tr>
+              </Tr>
             )}
           </Tbody>
         </Table>

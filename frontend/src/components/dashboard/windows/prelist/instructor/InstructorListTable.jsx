@@ -5,7 +5,7 @@ import {
   EditIcon,
   ViewIcon,
 } from '@chakra-ui/icons';
-import { Box, Button, Flex, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -60,46 +60,35 @@ const InstructorListTable = ({
         <Td>{account.position}</Td>
 
         <Td>
-          <Button
-            size="sm"
-            leftIcon={<ViewIcon />}
-            bg="blue.200"
-            color="blue.900"
-            _hover={{ bg: "blue.300" }}
-            mr={2}
+        <Flex gap={2}>
+          <IconButton
+            colorScheme="blue"
+            aria-label="View"
             onClick={() => {
               handleViewAccounts(account._id);
             }}
-           
-          >
-            View
-          </Button>
-          <Button
-            size="sm"
-            leftIcon={<EditIcon />}
-            bg="green.200"
-            color="green.900"
-            _hover={{ bg: "green.300" }}
-            mr={2}
+            size="lg"
+            icon={<ViewIcon />}
+          />
+          <IconButton
+            colorScheme="green"
+            aria-label="Edit"
             onClick={() => {
               handleEditAccounts(account._id);
             }}
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            bg="red.200"
-            color="red.900"
-            _hover={{ bg: "red.300" }}
-            leftIcon={<DeleteIcon />}
+            size="lg"
+            icon={<EditIcon />}
+          />
+          <IconButton
+            colorScheme="red"
+            aria-label="Delete"
             onClick={() => {
               handleDeleteAccounts(account._id);
             }}
-            
-          >
-            Delete
-          </Button>
+            size="lg"
+            icon={<DeleteIcon />}
+          />
+          </Flex>
         </Td>
       </Tr>
     ));

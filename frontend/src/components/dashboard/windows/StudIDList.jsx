@@ -18,6 +18,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import IdModal from "./prelist/student/idmodal/IdModal";
+import {EmailModal} from "./prelist/student/email-modal/EmailModal";
 import { useData } from "../../context/FetchAccountContext";
 import StudentId from "./StudentId";
 import StaffId from "./StaffId";
@@ -25,7 +26,9 @@ import FacultyId from "./FacultyId";
 
 export default function StudIDList() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [mailModalOpen, setMailModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [mail, setMail] = useState(null)
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCriteria, setFilterCriteria] = useState("issued"); // Default filter criteria set to 'issued'
@@ -35,6 +38,7 @@ export default function StudIDList() {
   const [selectedProgram, setSelectedProgram] = useState("");
 
   const handleViewClick = (student) => {
+    console.log(student);
     setSelectedStudent(student);
     setModalOpen(true);
   };
@@ -44,6 +48,16 @@ export default function StudIDList() {
     setSelectedStudent(null);
   };
 
+  const handleOpenMail = (student) => {
+    console.log(student);
+    setMail(student);
+    setMailModalOpen(true);
+  };
+  const handleCloseEmailModal = () => {
+    setMailModalOpen(false);
+    setMail(null);
+  };
+  
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -235,8 +249,8 @@ export default function StudIDList() {
       <Tabs colorScheme="purple" variant="enclosed">
         <TabList py={10} px={5}>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Students</Tab>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Faculty</Tab>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Staff</Tab>
+          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Faculty</Tab>
         </TabList>
 
         <TabPanels>
@@ -249,6 +263,7 @@ export default function StudIDList() {
                   selectedProgram={selectedProgram}
                   searchQuery={searchQuery}
                   handleViewClick={handleViewClick}
+                  handleOpenMail={handleOpenMail}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
                 />
@@ -263,6 +278,7 @@ export default function StudIDList() {
                   data={data}
                   filterCriteria={filterCriteria}
                   searchQuery={searchQuery}
+                  handleOpenMail={handleOpenMail}
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
@@ -278,6 +294,7 @@ export default function StudIDList() {
                   data={data}
                   filterCriteria={filterCriteria}
                   searchQuery={searchQuery}
+                  handleOpenMail={handleOpenMail}
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
@@ -295,6 +312,15 @@ export default function StudIDList() {
           isOpen={modalOpen}
           onClose={handleCloseModal}
           student={selectedStudent}
+        />
+      )}
+      {mail && (
+        <EmailModal
+          data={data}
+          setData={setData}
+          isOpen={mailModalOpen}
+          onClose={handleCloseEmailModal}
+          mail={mail}
         />
       )}
     </>

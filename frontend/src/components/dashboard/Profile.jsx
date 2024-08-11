@@ -43,7 +43,7 @@ const Profile = ({ allUsers, authId }) => {
                   </Avatar>
                 </WrapItem>
               </Wrap>
-              <Text>{user.firstname}</Text>
+              <Text>{user.lastname || "EMPTY"}</Text>
               <Spacer />
               <Icon textAlign="end"  fontSize="2rem" onClick={handleProfileModal}  _hover={{ cursor: "pointer" }}>
                 <ArrowUpIcon />

@@ -42,6 +42,7 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
       firstname: "",
       suffix: "",
       lastname: "",
+      middlename:'',
       email,
       password,
       isIdIssued: false,
