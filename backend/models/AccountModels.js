@@ -22,6 +22,7 @@ const userSchema = new Schema({
   address: String,
   contactnumber: String,
   contactperson: String,
+  contactpersonnumber: String,
   birthdate: Date,
   isIdIssued: Boolean,
   position: String,

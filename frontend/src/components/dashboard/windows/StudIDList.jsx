@@ -17,8 +17,9 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import IdModal from "./prelist/student/idmodal/IdModal";
+import IdToPrint from "./prelist/id/IdToPrint";
 import {EmailModal} from "./prelist/student/email-modal/EmailModal";
+import ApprovedModal from "./ApprovedModal";
 import { useData } from "../../context/FetchAccountContext";
 import StudentId from "./StudentId";
 import StaffId from "./StaffId";
@@ -26,9 +27,12 @@ import FacultyId from "./FacultyId";
 
 export default function StudIDList() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isaAprovedModalOpen, setIsaAprovedModalOpen] = useState(false);
+
   const [mailModalOpen, setMailModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [mail, setMail] = useState(null)
+  const [approved, setApproved] = useState(null)
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCriteria, setFilterCriteria] = useState("issued"); // Default filter criteria set to 'issued'
@@ -38,14 +42,21 @@ export default function StudIDList() {
   const [selectedProgram, setSelectedProgram] = useState("");
 
   const handleViewClick = (student) => {
-    console.log(student);
     setSelectedStudent(student);
     setModalOpen(true);
+  };
+  const handleApprovedOpen = (account) => {
+    setApproved(account);
+    setIsaAprovedModalOpen(true)
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedStudent(null);
+  };
+  const handleCloseApprovedModal = () => {
+    setIsaAprovedModalOpen(false);
+    setApproved(null);
   };
 
   const handleOpenMail = (student) => {
@@ -264,6 +275,7 @@ export default function StudIDList() {
                   searchQuery={searchQuery}
                   handleViewClick={handleViewClick}
                   handleOpenMail={handleOpenMail}
+                  handleApprovedOpen={handleApprovedOpen}
                   currentPage={currentPage}
                   handlePageClick={handlePageClick}
                 />
@@ -277,6 +289,7 @@ export default function StudIDList() {
                 <StaffId
                   data={data}
                   filterCriteria={filterCriteria}
+                  handleApprovedOpen={handleApprovedOpen}
                   searchQuery={searchQuery}
                   handleOpenMail={handleOpenMail}
                   handleViewClick={handleViewClick}
@@ -294,6 +307,7 @@ export default function StudIDList() {
                   data={data}
                   filterCriteria={filterCriteria}
                   searchQuery={searchQuery}
+                  handleApprovedOpen={handleApprovedOpen}
                   handleOpenMail={handleOpenMail}
                   handleViewClick={handleViewClick}
                   currentPage={currentPage}
@@ -306,12 +320,20 @@ export default function StudIDList() {
       </Tabs>
 
       {selectedStudent && (
-        <IdModal
+        <IdToPrint
           data={data}
           setData={setData}
           isOpen={modalOpen}
           onClose={handleCloseModal}
           student={selectedStudent}
+        />
+      )}
+      {approved && (
+        <ApprovedModal 
+        isOpen={isaAprovedModalOpen}
+        onClose={handleCloseApprovedModal}
+          approved={approved}
+        
         />
       )}
       {mail && (

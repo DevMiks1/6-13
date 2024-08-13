@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -13,18 +13,22 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { updateAccountAPI } from "../../api/AccountsApi";
+import { useData } from "../../context/FetchAccountContext";
 
 const StudentId = ({
-  data,
   filterCriteria,
   searchQuery,
   selectedProgram,
   handleViewClick,
+  handleApprovedOpen,
   handleOpenMail,
   currentPage,
   handlePageClick,
 }) => {
+  const { data, setData } = useData();
   const studentsPerPage = 4;
 
   // Filter students based on role
@@ -52,6 +56,8 @@ const StudentId = ({
     (currentPage + 1) * studentsPerPage
   );
 
+  
+
   const displayStudents = displayedStudents.map((student) => (
     <Tr key={student._id}>
       <Td>
@@ -67,6 +73,16 @@ const StudentId = ({
         >
           View
         </Button>
+        {!student.isIdIssued && (
+          <Button
+          mr={5}
+          size="sm"
+          leftIcon={<CheckIcon  />}
+          onClick={() => handleApprovedOpen(student)}
+        >
+          Approved
+        </Button>
+        )}
         {student.isIdIssued && (
           <Button
           size="sm"

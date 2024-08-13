@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -15,16 +15,20 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useData } from "../../context/FetchAccountContext";
 
 const FacultyId = ({
-  data,
+  
   filterCriteria,
   searchQuery,
   handleViewClick,
+  handleApprovedOpen,
   handleOpenMail,
   currentPage,
   handlePageClick,
 }) => {
+  const { data, setData } = useData();
+
   const facultyPerPage = 4;
 
   const filteredFacultyId = data.filter(
@@ -63,6 +67,16 @@ const FacultyId = ({
         >
           View
         </Button>
+        {!faculty.isIdIssued && (
+          <Button
+          mr={5}
+          size="sm"
+          leftIcon={<CheckIcon  />}
+          onClick={() => handleApprovedOpen(faculty)}
+        >
+          Approved
+        </Button>
+        )}
         {faculty.isIdIssued && (
           <Button
           size="sm"

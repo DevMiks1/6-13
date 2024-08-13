@@ -8,7 +8,7 @@ const GraphsAndAnalytics = React.lazy(() =>
   import("./windows/GraphsAndAnalytics")
 );
 const Settings = React.lazy(() => import("./windows/Settings"));
-const StudentProfile = React.lazy(() => import("./windows/StudentProfile"));
+const AccountSetting = React.lazy(() => import("./windows/AccountSetting"));
 const Reports = React.lazy(() => import("./windows/Reports"));
 const ReportId = React.lazy(() => import("./windows/ReportId"));
 
@@ -29,7 +29,7 @@ export const WindowDisplay = ({ tab, accountLogin }) => {
       setDisplay(components[tab] || null);
     } else if (["student", "faculty", "staff"].includes(role)) {
       const employee = {
-        profile: StudentProfile,
+        profile: AccountSetting,
         reportid: ReportId,
       };
       setDisplay(employee[tab] || null);

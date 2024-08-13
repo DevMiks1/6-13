@@ -108,7 +108,7 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
                 </p>
               </div>
               <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">Contact Number</p>
+                <p class="w-[35%] text-[.950rem] font-[500]">ContactNumber</p>
                 <p class="w-[65%] text-[.900rem] font-[400]">
                   {account.contactnumber || "EMPTY"}
                 </p>
@@ -117,6 +117,12 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
                 <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson</p>
                 <p class="w-[65%] text-[.900rem] font-[400]">
                   {account.contactperson || "EMPTY"}
+                </p>
+              </div>
+              <div class="flex">
+                <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson No.</p>
+                <p class="w-[65%] text-[.900rem] font-[400]">
+                  {account.contactpersonnumber || "EMPTY"}
                 </p>
               </div>
               <div class="flex mb-5">
@@ -191,9 +197,15 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
               </p>
             </div>
             <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson</p>
+              <p class="w-[35%] text-[.950rem] font-[500]">Contact Person</p>
               <p class="w-[65%] text-[.900rem] font-[400]">
                 {account.contactperson || "EMPTY"}
+              </p>
+            </div>
+            <div class="flex">
+              <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson No.</p>
+              <p class="w-[65%] text-[.900rem] font-[400]">
+                {account.contactpersonnumber || "EMPTY"}
               </p>
             </div>
             <div class="flex ">

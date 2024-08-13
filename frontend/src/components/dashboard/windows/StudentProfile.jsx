@@ -63,7 +63,8 @@ const StudentProfile = ({
   const [sss, setSSS] = useState("");
   const [tin, setTin] = useState("");
   const [contactPerson, setContactPerson] = useState("");
-  const [year, setYear] = useState("");
+  const [contactPersonNumber, setContactPersonNumber] = useState("");
+  const [schoolyear, setSchoolyear] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [contactnumber, setContactNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -77,9 +78,6 @@ const StudentProfile = ({
   const accountLogin = () => {
     return data.find((d) => d._id === authId);
   };
-  const datas = () => data.map((d) => d);
-  const allAccount = datas();
-  console.log(allAccount, "All");
   const user = accountLogin();
   console.log(user);
 
@@ -115,9 +113,10 @@ const StudentProfile = ({
       lastname: lastname,
       middlename: middlename,
       course: course,
-      year: year,
+      schoolyear: schoolyear,
       birthdate: birthdate,
       contactnumber: contactnumber,
+      contactpersonnumber: contactPersonNumber,
       contactperson: contactPerson,
       address: address,
       position: position,
@@ -194,9 +193,9 @@ const StudentProfile = ({
   const birth = user.birthdate;
   const date = birth ? new Date(birth) : null;
   const formattedDate = date ? date.toISOString().split("T")[0] : "";
-  console.log(formattedDate);
 
   return (
+    
     <Box key={user._id} h="100%">
       <SimpleGrid p={0}>
         <Card bg="#e9e8df">
@@ -275,13 +274,19 @@ const StudentProfile = ({
               {user.role === "student" && (
                 <ListItem>
                   <ListIcon as={InfoIcon} color="#FFD700" />
-                  Year: {user.year}
+                  Schoolyear: {user.schoolyear}
                 </ListItem>
               )}
               {
                 <ListItem>
                   <ListIcon as={InfoIcon} color="#FFD700" />
-                  Contact Person: {user.contactperson}
+                  ContactPerson: {user.contactperson}
+                </ListItem>
+              }
+              {
+                <ListItem>
+                  <ListIcon as={InfoIcon} color="#FFD700" />
+                  ContactPerson No.: {user.contactpersonnumber}
                 </ListItem>
               }
               {
@@ -413,15 +418,15 @@ const StudentProfile = ({
                     <FormLabel>Year:</FormLabel>
                     <Select
                       name="year"
-                      value={year}
+                      value={schoolyear}
                       placeholder="Select Year"
-                      onChange={(e) => setYear(e.target.value)}
+                      onChange={(e) => setSchoolyear(e.target.value)}
                     >
                       <option value="1st">1st</option>
                       <option value="2nd">2nd</option>
                       <option value="3rd">3rd</option>
                       <option value="4th">4th</option>
-                      <option value="5th">5yj</option>
+                      <option value="5th">5th</option>
                     </Select>
                   </FormControl>
                 </>
@@ -489,12 +494,22 @@ const StudentProfile = ({
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Contact Person:</FormLabel>
+                <FormLabel>ContactPerson:</FormLabel>
                 <Input
                   type="text"
                   name="course"
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
+                  placeholder="Contact Person"
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>ContactPerson No.:</FormLabel>
+                <Input
+                  type="text"
+                  name="course"
+                  value={contactPersonNumber}
+                  onChange={(e) => setContactPersonNumber(e.target.value)}
                   placeholder="Contact Person"
                 />
               </FormControl>

@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -15,9 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useData } from "../../context/FetchAccountContext";
 
 const StaffId = ({
-  data,
+  handleApprovedOpen,
   filterCriteria,
   searchQuery,
   handleViewClick,
@@ -25,6 +26,7 @@ const StaffId = ({
   handleOpenMail,
   handlePageClick,
 }) => {
+  const { data, setData } = useData();
   const staffPerPage = 4;
 
   const filteredStaffId = data.filter(
@@ -63,6 +65,16 @@ const StaffId = ({
         >
           View
         </Button>
+        {!staff.isIdIssued && (
+          <Button
+          mr={5}
+          size="sm"
+          leftIcon={<CheckIcon  />}
+          onClick={() => handleApprovedOpen(staff)}
+        >
+          Approved
+        </Button>
+        )}
         {staff.isIdIssued && (
           <Button
           size="sm"

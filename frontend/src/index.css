@@ -77,3 +77,38 @@ canvas {
   top: 0;
   left: 0;
 }
+
+.signature {
+  position: relative;
+  display: inline-block;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-align: center;
+  width: 50%;
+}
+
+.signature::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Thickness of the underline */
+  background-color: black; /* Color of the underline */
+}
+.signature-registrar {
+  position: relative;
+  display: inline-block;
+  font-size: 16px; 
+  font-weight: bold; 
+  text-align: center;
+  width: 50%;
+}
+.signature-registrar::before {
+  content: "";
+  position: absolute;
+   /* Adjust this value to position the underline */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Thickness of the underline */
+  background-color: black; /* Color of the underline */
+}

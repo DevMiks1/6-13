@@ -31,7 +31,14 @@ const EditAccount = ({ isOpen, onClose, account }) => {
   const toast = useToast();
 
   const [formData, setFormData] = useState(
-    account || { name: "", course: "", schoolyear: "", middlename: "" }
+    account || {
+      name: "",
+      course: "",
+      schoolyear: "",
+      middlename: "",
+      contactperson: "",
+      contactpersonnumber: "",
+    }
   );
 
   useEffect(() => {
@@ -155,10 +162,10 @@ const EditAccount = ({ isOpen, onClose, account }) => {
                     <option value="" disabled>
                       Select course
                     </option>
-                    <option value="bsamt">BSAMT</option>
-                    <option value="bsat">BSAT</option>
-                    <option value="bsa">BSAIT</option>
-                    <option value="bsavlog">BSAvLog</option>
+                    <option value="BSAMT">BSAMT</option>
+                    <option value="BSAT">BSAT</option>
+                    <option value="BSAIT">BSAIT</option>
+                    <option value="BSAVLOG">BSAvLog</option>
                   </Select>
                 </FormControl>
                 <FormControl>
@@ -224,17 +231,24 @@ const EditAccount = ({ isOpen, onClose, account }) => {
                   onChange={handleChange}
                 />
               </FormControl>
-
               <FormControl>
-                <FormLabel>Address</FormLabel>
+                <FormLabel>ContactPerson No.</FormLabel>
                 <Input
-                  name="address"
-                  value={formData.address}
+                  name="contactpersonnumber"
+                  value={formData.contactpersonnumber}
                   onChange={handleChange}
                 />
               </FormControl>
             </>
           </Flex>
+          <FormControl>
+            <FormLabel>Address</FormLabel>
+            <Input
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </FormControl>
           <Flex gap={3}>
             <>
               <FormControl>
